@@ -58,9 +58,16 @@ def min_reading():
     with open("Tarot DB/minor_arcana.json", encoding="UTF-8") as min_tarot:
         min_data = json.load(min_tarot)
 
+    # This grabs the Minor Arcana Card with its suit, class and which way it is facing
     first = "Your card is " + suit + " of " + min_arcana + "\nFacing: " + facing
+
+    # Suit Key. To grab  which way the card is facing and which meaning to grab
     s_key = 'key_means' if facing == "Upright" else 'rev_means'
+
+    # Grabs the rolled card's meaning / keywords placing it in a variable
     result = min_data[min_arcana][suit_dict[suit]][suit][0][s_key]
+
+    # Made to make the meaning / keywords of the card readable
     second = "\n".join(textwrap.wrap(result, 35))
     return first + "\n" + second
 
@@ -73,22 +80,23 @@ def maj_reading():
     # Randomizing which Major Arcana is picked
     maj_arcana = random.choice(list(maj_dict.keys()))
     facing = random.choice(card_facing)
-    # Printing the
+
+    # Printing the card itself
     first = "Your card is " + maj_arcana + "\n" + facing
 
-    #
+    # specifying which way the card is facing
     s_key = 'key_means' if facing == "Upright" else 'rev_means'
+
+    # Grabs the meaning of the card with all previous variables set.
     result = maj_data[int(maj_dict[maj_arcana])][maj_arcana][0][s_key]
+
+    # Grabs the results and makes it more digestable
     second = "\n".join(textwrap.wrap(result, 35))
     return first + "\n" + second
 
 
-def tarot_reading(i_int):
-    while i_int != 0:
+def tarot_reading(num):
+    while num != 0:
         tarot = [min_reading, maj_reading]
         return random.choice(tarot)()
-        i_int -= 1
-
-
-
-# tarot_reading()
+        num -= 1
